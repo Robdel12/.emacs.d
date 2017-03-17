@@ -1,0 +1,6 @@
+elpa/
+data/
+.cask
+auto-save-list/
+projectile-bookmarks.eld
+projectile.cache
