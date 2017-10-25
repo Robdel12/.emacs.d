@@ -4,7 +4,7 @@
 ;; (set-face-attribute 'font-lock-constant-face nil :italic t)
 (set-face-attribute 'font-lock-keyword-face nil :italic t)
 ;; (set-face-attribute 'font-lock-builtin-face nil :foreground "#00003f")
-(set-face-attribute 'font-lock-type-face nil :italic t)
+;; (set-face-attribute 'font-lock-type-face nil :italic t)
 (set-face-attribute 'font-lock-function-name-face nil :italic t)
 (set-face-attribute 'font-lock-variable-name-face nil :italic t)
 
