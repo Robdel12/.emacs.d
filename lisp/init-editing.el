@@ -129,11 +129,6 @@
   :ensure t
   :bind ("C-=" . er/expand-region))
 
-;; Drag things up and down with meta
-(use-package drag-stuff
-  :bind (("M-<down>" . drag-stuff-down)
-         ("M-<up>" . drag-stuff-up)))
-
 (use-package comment-dwim-2
   :bind ("s-/" . comment-dwim-2))
 
@@ -173,7 +168,9 @@
 ;; move lines
 (use-package move-text
   :bind (("M-p" . move-text-up)
-         ("M-n" . move-text-down)))
+         ("M-n" . move-text-down)
+         ("M-<down>" . move-text-down)
+         ("M-<up>" . move-text-up)))
 
 ;; auto-detect indentation
 (use-package dtrt-indent
