@@ -124,6 +124,29 @@
   :config
   (global-undo-tree-mode))
 
+;; Expand selection with control + =
+(use-package expand-region
+  :ensure t
+  :bind ("C-=" . er/expand-region))
+
+;; Drag things up and down with meta
+(use-package drag-stuff
+  :bind (("M-<down>" . drag-stuff-down)
+         ("M-<up>" . drag-stuff-up)))
+
+(use-package comment-dwim-2
+  :bind ("s-/" . comment-dwim-2))
+
+;; Kill whole line OR region
+(defun rd/kill-region-or-line ()
+  "Kill the region if active. Else, kill the line."
+  (interactive)
+  (if (use-region-p)
+      (call-interactively 'kill-region)
+    (call-interactively 'crux-kill-whole-line)))
+
+(global-set-key (kbd "C-w") 'rd/kill-region-or-line)
+
 ;; which key
 (use-package which-key
   :diminish which-key-mode
