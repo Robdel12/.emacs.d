@@ -39,5 +39,15 @@
   (company-tooltip-flip-when-above t)
   :hook (after-init . global-company-mode))
 
+(use-package lsp-mode
+  :commands lsp
+  :init
+  (setq lsp-prefer-flymake nil)
+  :hook ((js2-mode . lsp)
+         (typescript-mode . lsp)))
+
+(use-package lsp-ui :commands lsp-ui-mode)
+(use-package company-lsp :commands company-lsp)
+
 (provide 'init-completion)
 ;;; init-completion.el ends here

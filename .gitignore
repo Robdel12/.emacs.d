@@ -15,3 +15,5 @@ lock
 .#*
 #*#
 *~
+transient
+.lsp-session-v1

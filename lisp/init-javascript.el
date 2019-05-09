@@ -30,17 +30,24 @@
 (use-package js-doc
   :bind (:map js2-refactor-mode-map
          ("C-c C-r i d" . js-doc-insert-function-doc)
-         ("@" . js-doc-insert-tag))
-  :custom
-  (js-doc-mail-address "wil@wilwilsman.com")
-  (js-doc-author (format "Wil Wilsman <%s>" js-doc-mail-address)))
+         ("@" . js-doc-insert-tag)))
 
 (use-package add-node-modules-path
   :hook ((js2-mode . add-node-modules-path)
          (web-mode . add-node-modules-path)))
 
 (use-package json-mode)
-(use-package prettier-js)
+(use-package prettier-js
+  :hook (js2-mode . prettier-js-mode))
+
+;; (use-package typescript-mode)
+(use-package tide
+  :ensure t
+  :after (typescript-mode company flycheck)
+  :hook ((typescript-mode . tide-setup)
+         (typescript-mode . tide-hl-identifier-mode)))
+
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
 
 ;; parse node stack traces in compilation buffers
 (require 'compile)
