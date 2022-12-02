@@ -28,7 +28,6 @@
 (require 'init-linum)
 (require 'init-windowing)
 (require 'init-editing)
-(require 'init-session)
 (require 'init-completion)
 (require 'init-projectile)
 (require 'init-modeline)

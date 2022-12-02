@@ -37,17 +37,6 @@
          (web-mode . add-node-modules-path)))
 
 (use-package json-mode)
-(use-package prettier-js
-  :hook (js2-mode . prettier-js-mode))
-
-;; (use-package typescript-mode)
-(use-package tide
-  :ensure t
-  :after (typescript-mode company flycheck)
-  :hook ((typescript-mode . tide-setup)
-         (typescript-mode . tide-hl-identifier-mode)))
-
-(add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
 
 ;; parse node stack traces in compilation buffers
 (require 'compile)
