@@ -5,8 +5,8 @@
 
 ;; set up "Fira Code" font + ligatures
 (when (find-font (font-spec :name "Fira Code"))
-  (add-to-list 'default-frame-alist '(font . "Fira Code-16"))
-  (set-face-attribute 'default t :font "Fira Code-16")
+  (add-to-list 'default-frame-alist '(font . "Fira Code-14"))
+  (set-face-attribute 'default t :font "Fira Code-14")
 
   ;; "Fira Code" ligatures
   (dolist (char-regexp
