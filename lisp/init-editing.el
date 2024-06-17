@@ -13,6 +13,7 @@
 
 ;; show trailing whitespace in prog-mode
 (add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
+(add-hook 'prog-mode-hook 'copilot-mode)
 
 ;; missing newlines can mess up diffs
 (setq require-final-newline t)
@@ -207,6 +208,28 @@
 
 (bind-key "C-c C-p" `ww/increment-number-at-point)
 (bind-key "C-c C-n" `ww/decrement-number-at-point)
+
+(defun rd/comment-line-or-region ()
+  "Comment or uncomment the current line or region."
+  (interactive)
+  (let (beg end)
+    (if (region-active-p)
+        (setq beg (region-beginning) end (region-end))
+      (setq beg (line-beginning-position)
+            end (line-end-position)))
+    (comment-or-uncomment-region beg end)
+    (forward-line)))
+
+(global-set-key (kbd "s-/") 'rd/comment-line-or-region)
+
+(use-package copilot
+  :quelpa (copilot :fetcher github
+                   :repo "copilot-emacs/copilot.el"
+                   :branch "main"
+                   :files ("*.el")))
+
+(define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
+(define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
 
 (provide 'init-editing)
 ;;; init-editing.el ends here
