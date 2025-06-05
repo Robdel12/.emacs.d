@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: do block
+# key: do
+# --
+do |${1:var}|
+  $0
+end

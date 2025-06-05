@@ -10,7 +10,7 @@
  '(("melpa" . "https://melpa.org/packages/")
    ("melpa-stable" . "https://stable.melpa.org/packages/")
    ;;("gnu" . "http://elpa.gnu.org/packages/"))
-   ("gnu" . "http://mirrors.163.com/elpa/gnu/"))
+  ("gnu" . "https://elpa.gnu.org/packages/"))
  package-archive-priorities
  '(("melpa" . 10)
    ("melpa-stable" . 5)
