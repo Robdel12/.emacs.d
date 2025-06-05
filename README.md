@@ -33,6 +33,10 @@ it to the list.
 
 - To see flycheck errors in JS, install `eslint`: `npm install -g eslint`
 
+- For Ruby development install `rbenv` and the `solargraph` gem for LSP
+  integration: `gem install solargraph`
+- Common Ruby snippets live in `snippets/ruby-mode` for quick expansion.
+
 - For GPG signing, pinentry is installed and automatically started. You'll have
   to add `allow-emacs-pinentry` and `allow-loopback-pinentry` to `.gnupg/gpg-agent.conf`
   then reload gpg-agent with `gpgconf --reload gpg-agent`.

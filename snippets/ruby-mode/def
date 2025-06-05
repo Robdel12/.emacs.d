@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: def method
+# key: def
+# --
+def ${1:method_name}(${2:args})
+  $0
+end

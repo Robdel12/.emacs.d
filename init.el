@@ -19,12 +19,14 @@
 ;; initial configs
 (require 'init-ui)
 (require 'init-elpa)
+(require 'init-treesit)
 
 ;; language specific configs
 (require 'init-web)
 (require 'init-javascript)
 (require 'init-markdown)
 (require 'init-yaml)
+(require 'init-ruby)
 (require 'init-lua)
 (require 'init-c)
 
