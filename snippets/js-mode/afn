@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: async function
+# key: afn
+# --
+async function ${1:name}(${2:args}) {
+  $0
+}

@@ -1,4 +1,5 @@
 .DS_Store
+tree-sitter
 custom.el
 elpa
 quelpa

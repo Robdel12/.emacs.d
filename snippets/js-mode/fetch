@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: fetch promise
+# key: fetch
+# --
+let response = await fetch(${1:url});
+let ${2:data} = await response.json();
+$0

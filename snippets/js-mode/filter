@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: array filter
+# key: filter
+# --
+${1:array}.filter(${2:item} => {
+  $0
+})
