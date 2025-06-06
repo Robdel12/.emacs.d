@@ -1,0 +1,5 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: belongs_to
+# key: belongs_to
+# --
+belongs_to :${1:association}

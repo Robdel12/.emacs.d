@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: array map
+# key: map
+# --
+${1:array}.map(${2:item} => {
+  $0
+})

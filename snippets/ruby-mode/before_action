@@ -1,0 +1,5 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: before_action
+# key: before_action
+# --
+before_action :${1:method}${2:, only: [:${3:action}]}

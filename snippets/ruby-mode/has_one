@@ -1,0 +1,5 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: has_one
+# key: has_one
+# --
+has_one :${1:association}
