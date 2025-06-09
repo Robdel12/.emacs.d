@@ -3,6 +3,19 @@
 ;;; Code:
 (require 'quelpa-use-package)
 
+;; Make sure `copilot-mode` symbol exists before the real package is loaded
+(autoload 'copilot-mode "copilot" nil t)
+
+;; key-chord support
+(use-package key-chord
+  :ensure t)
+
+(use-package use-package-chords
+  :after key-chord
+  :ensure t
+  :config
+  (key-chord-mode 1))
+
 ;; spaces > tabs
 (setq-default indent-tabs-mode nil
               tab-always-indent 'complete
@@ -13,7 +26,6 @@
 
 ;; show trailing whitespace in prog-mode
 (add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
-(add-hook 'prog-mode-hook 'copilot-mode)
 
 ;; missing newlines can mess up diffs
 (setq require-final-newline t)
@@ -72,11 +84,7 @@
 ;; xref enter as tab
 (use-package xref
   :bind (:map xref--xref-buffer-mode-map
-         ("<return>" . xref-quit-and-goto-xref)))
-
-;; key-chords
-(use-package use-package-chords
-  :config (key-chord-mode 1))
+              ("<return>" . xref-quit-and-goto-xref)))
 
 ;; jump anywhere
 (use-package ace-jump-mode
@@ -114,7 +122,8 @@
 (bind-key "C-c <tab>" `ww/toggle-indent-tabs-mode)
 
 ;; ability to restart emacs quickly
-(use-package restart-emacs)
+(use-package restart-emacs
+  :ensure t)
 
 ;; auto open/close pairs
 (use-package smartparens-config
@@ -222,14 +231,22 @@
 
 (global-set-key (kbd "s-/") 'rd/comment-line-or-region)
 
-(use-package copilot
-  :quelpa (copilot :fetcher github
-                   :repo "copilot-emacs/copilot.el"
-                   :branch "main"
-                   :files ("*.el")))
+;; Copilot config for Emacs 27-29 (quelpa) and 30+ (vc)
+(if (version<= emacs-version "29.1")
+    (use-package copilot
+      :quelpa (copilot :fetcher github
+                       :repo "copilot-emacs/copilot.el"
+                       :branch "main"
+                       :files ("*.el")))
+  (use-package copilot
+    :vc (:url "https://github.com/copilot-emacs/copilot.el"
+              :rev :newest
+              :branch "main")))
 
-(define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
-(define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
+(with-eval-after-load 'copilot
+  (add-hook 'prog-mode-hook #'copilot-mode)
+  (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
+  (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion))
 
 (provide 'init-editing)
 ;;; init-editing.el ends here
