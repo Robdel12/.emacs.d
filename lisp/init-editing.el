@@ -57,43 +57,37 @@
 (show-paren-mode t)
 
 ;; pixel precision scrolling
-(pixel-scroll-precision-mode t)
+(pixel-scroll-mode 1)
 
 ;; autosave buffers with names
-(defadvice switch-to-buffer (before save-buffer-now activate)
-  "Autosave file on buffer switch."
+(defun rd/autosave-if-buffer-file (&rest _)
+  "Autosave current buffer if it's visiting a file."
   (when buffer-file-name (save-buffer)))
-(defadvice other-window (before other-window-now activate)
-  "Autosave file on window switch."
-  (when buffer-file-name (save-buffer)))
-(defadvice windmove-up (before other-window-now activate)
-  "Autosave file on window switch."
-  (when buffer-file-name (save-buffer)))
-(defadvice windmove-down (before other-window-now activate)
-  "Autosave file on window switch."
-  (when buffer-file-name (save-buffer)))
-(defadvice windmove-left (before other-window-now activate)
-  "Autosave file on window switch."
-  (when buffer-file-name (save-buffer)))
-(defadvice windmove-right (before other-window-now activate)
-  "Autosave file on window switch."
-  (when buffer-file-name (save-buffer)))
-;; autosave when focus is lost
-(add-hook 'focus-out-hook (lambda () (when buffer-file-name (save-buffer))))
+
+(advice-add 'switch-to-buffer :before #'rd/autosave-if-buffer-file)
+(advice-add 'other-window :before #'rd/autosave-if-buffer-file)
+(advice-add 'windmove-up :before #'rd/autosave-if-buffer-file)
+(advice-add 'windmove-down :before #'rd/autosave-if-buffer-file)
+(advice-add 'windmove-left :before #'rd/autosave-if-buffer-file)
+(advice-add 'windmove-right :before #'rd/autosave-if-buffer-file)
+(add-hook 'focus-out-hook #'rd/autosave-if-buffer-file)
 
 ;; xref enter as tab
 (use-package xref
+  :ensure t
   :bind (:map xref--xref-buffer-mode-map
               ("<return>" . xref-quit-and-goto-xref)))
 
 ;; jump anywhere
 (use-package ace-jump-mode
+  :ensure t
   :chords (("jj" . ace-jump-char-mode)
            ("jk" . ace-jump-word-mode)
            ("jl" . ace-jump-line-mode)))
 
-;; ridiculously useful extenstions
+;; ridiculously useful extensions
 (use-package crux
+  :ensure t
   :bind (([(shift return)] . crux-smart-open-line)
          ([(control shift return)] . crux-smart-open-line-above)
          ([remap move-beginning-of-line] . crux-move-beginning-of-line)
@@ -111,7 +105,7 @@
   (crux-with-region-or-buffer indent-region)
   (crux-with-region-or-buffer untabify))
 
-(defun ww/toggle-indent-tabs-mode ()
+(defun rd/toggle-indent-tabs-mode ()
   "Toggle the 'indent-tabs-mode' variable."
   (interactive)
   (setq indent-tabs-mode (not indent-tabs-mode))
@@ -119,25 +113,27 @@
    (concat
     "'indent-tabs-mode' is "
     (or (and indent-tabs-mode "t") "nil"))))
-(bind-key "C-c <tab>" `ww/toggle-indent-tabs-mode)
+(bind-key "C-c <tab>" `rd/toggle-indent-tabs-mode)
 
 ;; ability to restart emacs quickly
 (use-package restart-emacs
   :ensure t)
 
 ;; auto open/close pairs
-(use-package smartparens-config
-  :ensure smartparens
+(use-package smartparens
+  :ensure t
   :diminish smartparens-mode
   :config
   (smartparens-global-mode 1))
 
 ;; useful to browse kill-ring
 (use-package browse-kill-ring
+  :ensure t
   :chords (("yy" . browse-kill-ring)))
 
 ;; undo-tree
 (use-package undo-tree
+  :ensure t
   :diminish undo-tree-mode
   :chords (("uu" . undo-tree-visualize))
   :custom
@@ -148,53 +144,60 @@
 
 ;; which key
 (use-package which-key
+  :ensure t
   :diminish which-key-mode
   :config
   (which-key-mode t))
 
 (use-package yasnippet
+  :ensure t
   :config
   (yas-global-mode t))
 
 ;; highlight changes
 (use-package volatile-highlights
+  :ensure t
   :diminish volatile-highlights-mode
   :config
   (volatile-highlights-mode t))
 
 ;; multiple cursors
 (use-package multiple-cursors
+  :ensure t
   :bind (("C-S-c C-S-c" . mc/edit-lines)
          ("C->" . mc/mark-next-like-this)
          ("C-<" . mc/mark-previous-like-this)
          ("C-c C-<" . mc/mark-all-like-this)))
 (use-package mc-modal-mode
-  :ensure nil ; already in load-path
+  :ensure nil
   :bind (("C-c ." . mc-modal-mode)))
 
 ;; move lines
 (use-package move-text
+  :ensure t
   :bind (("M-p" . move-text-up)
          ("M-n" . move-text-down)))
 
 ;; kill the current line or region
 (use-package whole-line-or-region
+  :ensure t
   :config
   (whole-line-or-region-global-mode))
 
 ;; smart trim whitespace
 (use-package whitespace-cleanup-mode
+  :ensure t
   :diminish whitespace-cleanup-mode
   :hook (after-init . global-whitespace-cleanup-mode))
 
 ;; expand region
 (use-package expand-region
-  :ensure nil ; quelpa will take care of this
+  :ensure nil
   :quelpa (expand-region :fetcher github :repo "magnars/expand-region.el")
   :bind (("C-=" . er/expand-region)))
 
 ;; manipulate numbers
-(defun ww/increment-number-at-point (&optional arg)
+(defun rd/increment-number-at-point (&optional arg)
   "Increment the number at point by ARG."
   (interactive "p*")
   (save-excursion
@@ -210,13 +213,13 @@
           (replace-match (format (concat "%0" (int-to-string field-width) "d")
                                  answer)))))))
 
-(defun ww/decrement-number-at-point (&optional arg)
+(defun rd/decrement-number-at-point (&optional arg)
   "Decrement the number at point by ARG."
   (interactive "p*")
-  (ww/increment-number-at-point (if arg (- arg) -1)))
+  (rd/increment-number-at-point (if arg (- arg) -1)))
 
-(bind-key "C-c C-p" `ww/increment-number-at-point)
-(bind-key "C-c C-n" `ww/decrement-number-at-point)
+(bind-key "C-c C-p" `rd/increment-number-at-point)
+(bind-key "C-c C-n" `rd/decrement-number-at-point)
 
 (defun rd/comment-line-or-region ()
   "Comment or uncomment the current line or region."
