@@ -22,5 +22,27 @@
 
 (use-package inf-ruby :after ruby-mode)
 
+(with-eval-after-load 'flycheck
+  (flycheck-define-checker ruby-reek
+    "A Ruby smell checker using Reek."
+    :command ("bundle" "exec" "reek" "--format" "json" source)
+    :error-parser flycheck-parse-json
+    :error-filter (lambda (errors)
+                    (seq-map (lambda (err)
+                               (setf (flycheck-error-level err) 'warning)
+                               err)
+                             errors))
+    :modes ruby-mode)
+
+  (add-to-list 'flycheck-checkers 'ruby-reek)
+
+  (add-hook 'ruby-mode-hook
+            (lambda ()
+              (setq flycheck-ruby-rubocop-executable "bundle")
+              (setq flycheck-ruby-rubocop-command '("bundle" "exec" "rubocop"))
+              (flycheck-select-checker 'ruby-rubocop)
+              (flycheck-add-next-checker 'ruby-rubocop 'ruby-reek)
+              (flycheck-mode))))
+
 (provide 'init-ruby)
 ;;; init-ruby.el ends here
