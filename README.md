@@ -1,155 +1,87 @@
-# Modern Emacs Configuration
+# My Emacs config
 
-A modern, performant Emacs configuration focused on web development, featuring the latest completion frameworks and development tools.
+Fast, modern Emacs tuned for web development (JS/TS, HTML/CSS, Markdown, Ruby), with a clean UI,
+powerful search, and unified formatting.
 
-If you'd like to use this config, simply clone this repo into `~/.emacs.d`.
+Clone into `~/.emacs.d` and start Emacs. An Emacs server auto-starts; set `$EDITOR` to `emacsclient`
+if you like.
 
-If you make any changes, including adding snippets, features, or languages, feel free to contribute them back here!
+## Highlights
 
-### Prerequisites
+- Modeline: `doom-modeline` with icons, LSP/VC/diagnostics.
+- Completion: Vertico + Orderless + Corfu + Cape, plus Marginalia, Embark, and Consult.
+- Floating prompts: minibuffer/command palette appears top‑center via `mini-frame`.
+- Search: `consult-ripgrep` bound to `s-f` (project root via Projectile).
+- Formatting: Apheleia global on‑save formatting (prettierd/prettier, eslint_d, RuboCop, Black). EditorConfig respected.
+- LSP: `lsp-mode` with consult integration; diagnostics via Flycheck.
+- UI polish: base16 theme, pixel‑precise resize, smooth scrolling, `hl-line`, context menu.
+- Files: Treemacs with Nerd Icons.
+- Navigation: Avy jump (`jj` char, `jk` word, `jl` line), multiple cursors, expand-region.
 
-This list is probably not definitive. If you find you need to install other
-things to get the config to work properly, please create an issue so I can add
-it to the list.
+## Prerequisites (recommended)
 
-- An Emacs server is auto-started when one is not already running, update your
-  `$EDITOR` environment variable to `emacsclient` (optionally with `-c`).
-
-- I use [Fira Code](https://github.com/tonsky/FiraCode) with ligatures and
-  Operator Mono for cursive keywords. The config for these is only initialized
-  when the fonts exist.
-
-- [Select GitHub-style emojis](https://gitmoji.carloscuesta.me/) are transformed
-  into real unicode emojis. If using official Emacs (without multi-color font
-  support), [update this line](https://github.com/wwilsman/emacs.d/blob/master/lisp/init-emojis.el#L12-L13).
-  Or install [`emacs-plus`](https://github.com/d12frosted/homebrew-emacs-plus)
-  which enables multi-color fonts, a.k.a. emoji fonts.
-
-- To use spell-checking, install `ispell`: `brew install ispell`
-
-- To use [prettier](https://prettier.io/), install it: `npm install -g prettier`
-
-- Search functionality uses `consult` with various backends. For best performance, install `ripgrep`: `brew install ripgrep`
-
-- To see flycheck errors in JS, install `eslint`: `npm install -g eslint`
-
-- For Ruby development install `rbenv` and the `solargraph` gem for LSP
-  integration: `gem install solargraph`
-- Common Ruby snippets live in `snippets/ruby-mode` for quick expansion.
-
-- For GPG signing, pinentry is installed and automatically started. You'll have
-  to add `allow-emacs-pinentry` and `allow-loopback-pinentry` to `.gnupg/gpg-agent.conf`
-  then reload gpg-agent with `gpgconf --reload gpg-agent`.
-
-## Features
-
-### Modern Completion Framework
-
-This configuration uses a modern completion stack for fast, fuzzy matching:
-
-- **Vertico** - Fast, minimal completion UI
-- **Orderless** - Flexible completion style (space-separated terms)
-- **Consult** - Enhanced commands for searching and navigation
-- **Marginalia** - Rich annotations for completion candidates
-- **Embark** - Contextual actions on completion candidates
-
-### Language Support
-
-- **JavaScript/TypeScript** - LSP integration, web-mode for JSX/TSX
-- **Ruby** - Full LSP support with Solargraph
-- **Markdown/MDX** - GitHub-flavored markdown with live preview
-- **Astro** - Component syntax highlighting
-- **Web Technologies** - HTML, CSS, handlebars templates
-
-### Development Tools
-
-- **LSP Mode** - Language server integration for intelligent editing
-- **Treemacs** - File explorer sidebar
-- **Projectile** - Project-aware commands
-- **Magit** - Excellent Git integration
-- **Flycheck** - Real-time syntax checking
-- **Company** - Text completion
-- **GitHub Copilot** - AI-powered code suggestions
+- macOS: `brew install ripgrep ispell` (search and spell‑check).
+- Icons: install a Nerd Font (for modeline + Treemacs icons).
+- Node tooling: `npm i -g @fsouza/prettierd eslint_d` (faster format/lint). Project‑local binaries are preferred when present.
+- Ruby: `gem install solargraph rubocop`; prefer Bundler in projects.
+- Python: `pip install black`.
+- Emoji: if your Emacs build doesn’t support color fonts, adjust `lisp/init-emojis.el` or use `emacs-plus`.
 
 ## Key Bindings
 
-### Global Bindings
+- Search/project
+  - `s-f`: `consult-ripgrep` (project ripgrep)
+  - `M-x`: command palette (top‑center floating)
+  - `C-s`: `consult-line` (in‑buffer search)
+- Projectile
+  - `s-p` / `C-c p`: Projectile prefix (find file, switch project, etc.)
+- Jump/navigation
+  - `jj`: `avy-goto-char`, `jk`: `avy-goto-word-1`, `jl`: `avy-goto-line`
+  - `M-o`: `ace-window` (pick window)
+- Git
+  - `C-x g`: `magit-status`
+- LSP
+  - `C-c l`: LSP prefix (rename, code actions, etc.)
+- Embark
+  - `C-;`: action menu for the thing at point/candidate under cursor
 
-| Key | Command | Description |
-|-----|---------|-------------|
-| `C-s` | `consult-line` | Search within current buffer |
-| `C-;` | `embark-act` | Contextual actions on item at point |
-| `M-x` | `execute-extended-command` | Command palette (enhanced with completion) |
-| `C-x C-f` | `find-file` | Find file (enhanced with completion) |
-| `C-x b` | `consult-buffer` | Switch buffers (enhanced with completion) |
-| `C-x r b` | `consult-bookmark` | Jump to bookmark |
-| `C-c u` | `consult-focus-lines` | Focus matching lines |
-| `M-g g` | `consult-goto-line` | Go to line number |
-| `M-g i` | `consult-imenu` | Navigate to definitions |
-| `C-c h` | `consult-history` | Search command history |
-| `C-c m` | `consult-mode-command` | Search mode-specific commands |
+## Formatting
 
-### Projectile (Project Management)
+Apheleia runs on save with sensible defaults:
 
-| Key | Command | Description |
-|-----|---------|-------------|
-| `s-p` or `C-c p` | `projectile-command-map` | Projectile command prefix |
-| `C-c p f` | `projectile-find-file` | Find file in project |
-| `C-c p p` | `projectile-switch-project` | Switch to another project |
-| `C-c p b` | `consult-project-buffer` | Switch to project buffer |
-| `C-c p s r` | `projectile-replace` | Search and replace in project |
+- JS/TS/TSX/JSON/CSS/SCSS/Markdown/YAML → `prettierd` (or `prettier`) and `eslint_d` when
+  appropriate.
+- Ruby → `rubocop` (via Bundler when available).
+- Python → `black`.
 
-### LSP (Language Server)
+Disable per buffer with `M-x apheleia-mode` or customize `apheleia-mode-alist`.
 
-| Key | Command | Description |
-|-----|---------|-------------|
-| `C-c l` | `lsp-keymap-prefix` | LSP command prefix |
-| `C-c l r` | `lsp-rename` | Rename symbol |
-| `C-c l f` | `lsp-format-buffer` | Format current buffer |
-| `C-c l a` | `lsp-execute-code-action` | Execute code action |
-| `C-c l g g` | `lsp-find-definition` | Go to definition |
-| `C-c l g r` | `lsp-find-references` | Find references |
+## UI Notes
 
-### Magit (Git)
+- Floating minibuffer: uses `mini-frame`. If native macOS fullscreen hides child frames, try
+  maximized (not fullscreen) or ask for a `vertico-posframe` setup.
+- Icons depend on a Nerd Font and `nerd-icons`. Install a Nerd Font in your OS and select it in your
+  Emacs font settings if necessary.
 
-| Key | Command | Description |
-|-----|---------|-------------|
-| `C-x g` | `magit-status` | Open Magit status buffer |
-| `C-c g` | `magit-file-dispatch` | Git actions for current file |
+## Structure
 
-### Editing
+- `init.el` – entrypoint that requires the `lisp/init-*.el` modules
+- Notable modules:
+  - `lisp/init-modeline.el` – doom‑modeline
+  - `lisp/init-minibuffer.el` – Vertico/Orderless/Consult + Corfu/Cape
+  - `lisp/init-float-minibuffer.el` – top‑center floating prompts
+  - `lisp/init-format.el` – Apheleia unified formatting
+  - `lisp/init-lsp.el` – LSP + UI
+  - `lisp/init-treemacs.el` – Treemacs + Nerd Icons
+  - `lisp/init-ui.el` – UI polish
 
-| Key | Command | Description |
-|-----|---------|-------------|
-| `C-c c` | `comment-line` | Comment/uncomment current line |
-| `C-a` | Smart beginning of line | Move to indentation or line start |
-| `C-w` | `kill-region-or-line` | Kill region or current line |
-| `M-w` | `copy-region-or-line` | Copy region or current line |
-| `C-S-<backspace>` | `kill-whole-line` | Delete entire line |
+## Tips
 
-### Window Management
+- Use space‑separated terms with Orderless (e.g., `proj buf`).
+- Embark actions work everywhere: try `C-;` during any completion.
+- Project roots are resolved via Projectile for Consult commands.
 
-| Key | Command | Description |
-|-----|---------|-------------|
-| `M-o` | `other-window` | Switch to next window |
-| `C-x 1` | `delete-other-windows` | Make current window fill frame |
-| `C-x 2` | `split-window-below` | Split window horizontally |
-| `C-x 3` | `split-window-right` | Split window vertically |
+## Misc
 
-### Embark Actions
-
-Press `C-;` on any completion candidate or text to see contextual actions:
-
-- On files: Open, rename, delete, copy path
-- On buffers: Switch, kill, save
-- On symbols: Find definition, find references
-- On URLs: Open in browser
-- On regions: Search web, translate, etc.
-
-### Completion Tips
-
-- **Orderless matching**: Type space-separated terms in any order (`pro buf` matches "project-buffer")
-- **Regexp support**: Use `.*` for wildcards, `^term` for prefix matching
-- **Category filtering**: In `consult-buffer`, type `b ` for buffers only, `f ` for files only
-- **Preview**: Many consult commands show live preview while navigating candidates
-- **Annotations**: Marginalia shows helpful context for all completion candidates
+- Session state like `recentf`, `desktop/`, and `places` is ignored in git.
+- Contributions and PRs to improve languages and ergonomics are welcome.
