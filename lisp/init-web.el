@@ -15,7 +15,8 @@
          ("\\.html?\\'" . web-mode)
          ("\\.hbs?\\'" . web-mode)
          ("\\.[tj]sx?\\'" . web-mode)
-         ("\\.css?\\'" . web-mode))
+         ("\\.css?\\'" . web-mode)
+         ("\\.astro\\'" . web-mode))
   :custom
   (web-mode-content-types-alist '(("jsx" . "\\.[mc]?js[x]?\\'")))
   (web-mode-markup-indent-offset 2)

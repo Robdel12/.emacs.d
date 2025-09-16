@@ -2,7 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 (require 'use-package)
-(require 'quelpa-use-package)
 
 ;; dark mode!
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
@@ -18,34 +17,8 @@
     (add-to-list 'default-frame-alist '(font . "Operator Mono Lig"))
     (set-face-attribute 'default nil :font "Operator Mono Lig" :height 130)
 
-    ;; ligatures
-    (dolist (char-regexp '(
-        (33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
-        (35 . ".\\(?:###\\|##\\|_(\\|[#(?[_{]\\)")
-        (36 . ".\\(?:>\\)")
-        (37 . ".\\(?:\\(?:%%\\)\\|%\\)")
-        (38 . ".\\(?:\\(?:&&\\)\\|&\\)")
-        (42 . ".\\(?:\\(?:\\*\\*/\\)\\|\\(?:\\*[*/]\\)\\|[*/>]\\)")
-        (43 . ".\\(?:\\(?:\\+\\+\\)\\|[+>]\\)")
-        (45 . ".\\(?:\\(?:-[>-]\\|<<\\|>>\\)\\|[<>}~-]\\)")
-        (46 . ".\\(?:\\(?:\\.[.<]\\)\\|[.=-]\\)")
-        (47 . ".\\(?:\\(?:\\*\\*\\|//\\|==\\)\\|[*/=>]\\)")
-        (48 . ".\\(?:x[a-zA-Z]\\)")
-        (58 . ".\\(?:::\\|[:=]\\)")
-        (59 . ".\\(?:;;\\|;\\)")
-        (60 . ".\\(?:\\(?:!--\\)\\|\\(?:~~\\|->\\|\\$>\\|\\*>\\|\\+>\\|--\\|<[<=-]\\|=[<=>]\\||>\\)\\|[*$+~/<=>|-]\\)")
-        (61 . ".\\(?:\\(?:/=\\|:=\\|<<\\|=[=>]\\|>>\\)\\|[<=>~]\\)")
-        (62 . ".\\(?:\\(?:=>\\|>[=>-]\\)\\|[=>-]\\)")
-        (63 . ".\\(?:\\(\\?\\?\\)\\|[:=?]\\)")
-        (91 . ".\\(?:]\\)")
-        (92 . ".\\(?:\\(?:\\\\\\\\\\)\\|\\\\\\)")
-        (94 . ".\\(?:=\\)")
-        (119 . ".\\(?:ww\\)")
-        (123 . ".\\(?:-\\)")
-        (124 . ".\\(?:\\(?:|[=|]\\)\\|[=>|]\\)")
-        (126 . ".\\(?:~>\\|~~\\|[>=@~-]\\)")))
-      (set-char-table-range composition-function-table
-        (car char-regexp) `([,(cdr char-regexp) 0 font-shape-gstring])))
+    ;; modern ligatures handled by ligature.el package
+    t
 
     ;; italic faces
     (set-face-italic 'font-lock-builtin-face t)
@@ -95,9 +68,8 @@
   (base16-theme-set-faces 'ww/base16-theme ww/base16-theme-colors '(
    (fringe :background base00)
 
-   (linum :foreground base03 :background base00)
-   (linum-highlight-face :foreground base0E :background base00)
    (line-number :foreground base03 :background base00)
+   (line-number-current-line :foreground base0E :background base00)
 
    (window-divider :foreground base00)
    (window-divider-first-pixel :foreground base00)
@@ -106,14 +78,10 @@
    (internal-border :background base00)
    (child-frame-border :background base03)
 
-   (ivy-current-match :foreground base09)
+   (vertico-current :foreground base09)
 
-   (mode-line :foreground base00 :background base00)
-   (mode-line-inactive :foreground base00 :background base00)
-   (ww/modeline-default-face :foreground base05 :background base02 :box (:color base01))
-   (ww/modeline-popout-face :foreground base00 :background base0D :box (:color base01))
-   (ww/modeline-critical-face :foreground base00 :background base08 :box (:color base01))
-   (ww/modeline-faded-face :foreground base03 :background base02 :box (:color base01))
+   (mode-line :foreground base05 :background base02)
+   (mode-line-inactive :foreground base03 :background base01)
 
    (diff-hl-change :background base0E)
    (diff-hl-delete :background base08)
@@ -139,10 +107,7 @@
       (enable-theme 'ww/base16-theme)
       (ww/activate-operator-mono))))
 
-(use-package all-the-icons
-  :config
-  (if (and (window-system) (not (find-font (font-spec :name "Operator Mono Lig"))))
-    (all-the-icons-install-fonts t)))
+;; nerd-icons are configured in init-modeline.el
 
 (provide 'init-theme)
 ;;; init-theme.el ends here

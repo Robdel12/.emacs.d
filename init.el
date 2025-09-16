@@ -40,9 +40,12 @@
 (require 'init-windowing)
 (require 'init-editing)
 (require 'init-session)
+(require 'init-compile)
+(require 'init-format)
 (require 'init-theme)
 (require 'init-emojis)
 (require 'init-minibuffer)
+(require 'init-editorconfig)
 (require 'init-projectile)
 (require 'init-treemacs)
 (require 'init-modeline)
@@ -51,6 +54,9 @@
 (require 'init-dired)
 (require 'init-vcs)
 ;(require 'init-tracking)
+
+;; Load floating minibuffer last so it wins over any later hooks
+(require 'init-float-minibuffer)
 
 (provide 'init)
 ;;; init.el ends here

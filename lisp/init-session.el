@@ -21,6 +21,16 @@
 (savehist-mode 1)
 (add-to-list 'savehist-additional-variables 'kill-ring)
 
+;; remember cursor positions
+(save-place-mode 1)
+
+;; recent files
+(use-package recentf
+  :init
+  (setq recentf-max-saved-items 500
+        recentf-auto-cleanup 'never)
+  (recentf-mode 1))
+
 ;; clean up untouched buffers
 (defvar clean-buffer-list-timer nil
   "Stores 'clean-buffer-list' timer if there is one.

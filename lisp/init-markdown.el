@@ -4,7 +4,8 @@
 (require 'use-package)
 
 (use-package markdown-mode
-  :mode ("\\.md\\'" . gfm-mode)
+  :mode (("\\.md\\'" . gfm-mode)
+         ("\\.mdx\\'" . gfm-mode))
   :custom
   (markdown-header-scaling t)
   (markdown-fontify-code-blocks-natively t)

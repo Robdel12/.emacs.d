@@ -1,21 +1,31 @@
-;;; init-linum.el --- Line numbering
+;;; init-linum.el --- Modern line numbering
 ;;; Commentary:
 ;;; Code:
-(require 'use-package)
-(require 'linum)
 
-(defun ww/linum-format (line)
-  "Format LINE numbers to three digits with a trailing and leading space."
-  (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
-    (propertize (format (format " %%%dd " w) line) 'face 'linum)))
-(setq linum-format 'ww/linum-format)
-(add-hook 'text-mode-hook 'linum-mode)
-(add-hook 'prog-mode-hook 'linum-mode)
+;; modern line numbering (replaces deprecated linum)
+(when (version<= "26.0.50" emacs-version)
+  ;; ensure clean slate
+  (global-display-line-numbers-mode 0)
+  (global-display-line-numbers-mode 1)
 
-;; highlight line numbers
-(use-package hlinum
-  :config
-  (hlinum-activate))
+  (setq display-line-numbers-type t)     ; absolute line numbers
+  (setq display-line-numbers-width 3)   ; consistent width
+  (setq display-line-numbers-widen t)   ; avoid truncation
+
+  ;; disable in specific modes
+  (dolist (mode '(org-mode-hook
+                  term-mode-hook
+                  shell-mode-hook
+                  treemacs-mode-hook
+                  eshell-mode-hook
+                  dired-mode-hook
+                  help-mode-hook))
+    (add-hook mode (lambda () (display-line-numbers-mode 0)))))
+
+;; fallback for older emacs versions
+(unless (version<= "26.0.50" emacs-version)
+  (add-hook 'text-mode-hook 'linum-mode)
+  (add-hook 'prog-mode-hook 'linum-mode))
 
 (provide 'init-linum)
 ;;; init-linum.el ends here

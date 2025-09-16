@@ -29,7 +29,11 @@
         lsp-ui-sideline-show-hover nil
         lsp-ui-doc-enable nil))
 
-(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+;; consult integration for lsp
+(use-package consult-lsp
+  :after (consult lsp-mode)
+  :bind (:map lsp-mode-map
+         ([remap xref-find-apropos] . consult-lsp-symbols)))
 (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
 
 ;; The paths to lsp-mode and clients needs to be added to load-path

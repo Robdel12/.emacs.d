@@ -1,7 +1,7 @@
 ;;; init-editing.el --- Editing utils
 ;;; Commentary:
 ;;; Code:
-(require 'quelpa-use-package)
+(require 'use-package)
 
 ;; Make sure `copilot-mode` symbol exists before the real package is loaded
 (autoload 'copilot-mode "copilot" nil t)
@@ -59,6 +59,13 @@
 ;; pixel precision scrolling
 (pixel-scroll-mode 1)
 
+;; camelCase-aware word motions in code
+(add-hook 'prog-mode-hook #'subword-mode)
+
+;; handle pathological long lines gracefully
+(when (fboundp 'global-so-long-mode)
+  (global-so-long-mode 1))
+
 ;; autosave buffers with names
 (defun rd/autosave-if-buffer-file (&rest _)
   "Autosave current buffer if it's visiting a file."
@@ -78,12 +85,11 @@
   :bind (:map xref--xref-buffer-mode-map
               ("<return>" . xref-quit-and-goto-xref)))
 
-;; jump anywhere
-(use-package ace-jump-mode
-  :ensure t
-  :chords (("jj" . ace-jump-char-mode)
-           ("jk" . ace-jump-word-mode)
-           ("jl" . ace-jump-line-mode)))
+;; modern jump navigation
+(use-package avy
+  :chords (("jj" . avy-goto-char)
+           ("jk" . avy-goto-word-1)
+           ("jl" . avy-goto-line)))
 
 ;; ridiculously useful extensions
 (use-package crux
@@ -142,12 +148,18 @@
   :config
   (global-undo-tree-mode))
 
-;; which key
+;; enhanced which-key for discoverability
 (use-package which-key
   :ensure t
   :diminish which-key-mode
-  :config
-  (which-key-mode t))
+  :hook (after-init . which-key-mode)
+  :custom
+  (which-key-popup-type 'minibuffer)
+  (which-key-show-early-on-C-h t)
+  (which-key-idle-delay 0.5)
+  (which-key-max-display-columns nil)
+  (which-key-min-display-lines 6)
+  (which-key-side-window-max-height 0.25))
 
 (use-package yasnippet
   :ensure t
@@ -192,8 +204,6 @@
 
 ;; expand region
 (use-package expand-region
-  :ensure nil
-  :quelpa (expand-region :fetcher github :repo "magnars/expand-region.el")
   :bind (("C-=" . er/expand-region)))
 
 ;; manipulate numbers
@@ -234,17 +244,17 @@
 
 (global-set-key (kbd "s-/") 'rd/comment-line-or-region)
 
-;; Copilot config for Emacs 27-29 (quelpa) and 30+ (vc)
-(if (version<= emacs-version "29.1")
-    (use-package copilot
-      :quelpa (copilot :fetcher github
-                       :repo "copilot-emacs/copilot.el"
-                       :branch "main"
-                       :files ("*.el")))
-  (use-package copilot
-    :vc (:url "https://github.com/copilot-emacs/copilot.el"
-              :rev :newest
-              :branch "main")))
+;; copilot for AI assistance
+(use-package copilot
+  :ensure nil
+  :init
+  ;; Install via package-vc if not already installed
+  (unless (package-installed-p 'copilot)
+    (package-vc-install "https://github.com/copilot-emacs/copilot.el"))
+  :config
+  ;; Disable if language server not found (install with: npm install -g @github/copilot-language-server)
+  (when (not (executable-find "copilot-language-server"))
+    (message "Copilot language server not found. Install with: npm install -g @github/copilot-language-server")))
 
 (with-eval-after-load 'copilot
   (add-hook 'prog-mode-hook #'copilot-mode)

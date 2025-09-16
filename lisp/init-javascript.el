@@ -16,7 +16,9 @@
   :hook ((web-mode . add-node-modules-path)))
 
 (use-package json-mode)
-(use-package prettier-js)
+;; Prefer Apheleia for formatting; keep prettier-js available for manual use
+(use-package prettier-js
+  :defer t)
 
 ;; parse node stack traces in compilation buffers
 (require 'compile)
