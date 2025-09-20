@@ -15,6 +15,11 @@
  desktop-restore-frames t
  desktop-load-locked-desktop t
  desktop-auto-save-timeout 30)
+
+;; ensure desktop directory exists
+(unless (file-exists-p desktop-dirname)
+  (make-directory desktop-dirname t))
+
 (desktop-save-mode 1)
 
 ;; persist kill-ring

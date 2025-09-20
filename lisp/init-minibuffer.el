@@ -144,32 +144,7 @@
 
 ;; company removed in favor of corfu + cape
 
-;; floating minibuffer (disabled for now - may conflict with vertico)
-;; (use-package mini-frame
-;;   :defer nil
-;;   :custom
-;;   (mini-frame-show-parameters `(
-;;     (top . 100)
-;;     (left . 0.5)
-;;     (width . 0.5)
-;;     (alpha . 0.9)
-;;     (left-fringe . 13)
-;;     (right-fringe . 13)
-;;     (internal-border-width . 0)
-;;     (child-frame-border-width . 1)))
-;;   (mini-frame-ignore-commands '("edebug-eval-expression" debugger-eval-expression))
-;;   :init
-;;   (defun ww/minibuffer-setup ()
-;;     (setq line-spacing 0.4)
-;;     (face-remap-add-relative 'default 'highlight)
-;;     (face-remap-add-relative 'fringe 'default)
-;;     (let ((overlay (make-overlay (point-min) (+ (point-min) 1)))
-;;           (space (propertize "\n" 'face '(:height 0.5))))
-;;       (overlay-put overlay 'before-string space)))
-;;   :hook
-;;   (minibuffer-setup . ww/minibuffer-setup)
-;;   :config
-;;   (mini-frame-mode 1))
+;; floating minibuffer is now configured in init-float-minibuffer.el
 
 (provide 'init-minibuffer)
 ;;; init-minibuffer.el ends here
