@@ -21,7 +21,7 @@
      (horizontal-scroll-bars . nil)
      (tool-bar-lines . 0)
      (menu-bar-lines . 0)))
-  (mini-frame-resize 'grow-only)
+  (mini-frame-resize nil)
   (mini-frame-ignore-commands '("edebug-eval-expression" "debugger-eval-expression"))
   :config
   (mini-frame-mode 1))

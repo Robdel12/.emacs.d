@@ -18,6 +18,17 @@
         lsp-signature-auto-activate nil
         lsp-enable-on-type-formatting nil
         lsp-headerline-breadcrumb-enable nil
+        ;; File watching optimizations for web development
+        lsp-enable-file-watchers t
+        lsp-file-watch-threshold 2000
+        lsp-file-watch-ignored-directories
+        '("[/\\\\]\\.git$" "[/\\\\]\\.hg$" "[/\\\\]\\.bzr$" "[/\\\\]_darcs$"
+          "[/\\\\]\\.svn$" "[/\\\\]_FOSSIL_$" "[/\\\\]\\.idea$" "[/\\\\]\\.ensime_cache$"
+          "[/\\\\]\\.eunit$" "[/\\\\]node_modules" "[/\\\\]\\.fslckout$" "[/\\\\]\\.tox$"
+          "[/\\\\]dist$" "[/\\\\]build$" "[/\\\\]\\.cache$" "[/\\\\]\\.vscode$"
+          "[/\\\\]\\.DS_Store$" "[/\\\\]\\.ccls-cache$" "[/\\\\]\\.venv$" "[/\\\\]__pycache__$"
+          "[/\\\\]\\.mypy_cache$" "[/\\\\]\\.pytest_cache$" "[/\\\\]coverage$"
+          "[/\\\\]\\.nyc_output$" "[/\\\\]\\.next$" "[/\\\\]\\.nuxt$" "[/\\\\]public$")
         ;lsp-eslint-server-command '("vscode-eslint-language-server" "--stdio")
         lsp-eslint-validate '("javascript" "javascriptreact")))
 

@@ -47,8 +47,8 @@
 (global-auto-revert-mode t)
 (diminish 'auto-revert-mode)
 
-;; y/n prompts
-(fset 'yes-or-no-p 'y-or-n-p)
+;; y/n prompts (modern approach for Emacs 28+)
+(setq use-short-answers t)
 
 ;; delete selections
 (delete-selection-mode t)
@@ -137,16 +137,24 @@
   :ensure t
   :chords (("yy" . browse-kill-ring)))
 
-;; undo-tree
-(use-package undo-tree
+;; vundo - modern undo visualization (replaces undo-tree)
+(use-package vundo
   :ensure t
-  :diminish undo-tree-mode
-  :chords (("uu" . undo-tree-visualize))
+  :bind (("C-x u" . vundo)
+         ("C-/" . vundo)
+         :map vundo-mode-map
+         ("C-n" . vundo-next)
+         ("C-p" . vundo-previous)
+         ("C-f" . vundo-forward)
+         ("C-b" . vundo-backward)
+         ("n" . vundo-next)
+         ("p" . vundo-previous)
+         ("f" . vundo-forward)
+         ("b" . vundo-backward))
+  :chords (("uu" . vundo))
   :custom
-  (undo-tree-history-directory-alist `((".*" . ,temporary-file-directory)))
-  (undo-tree-auto-save-history t)
-  :config
-  (global-undo-tree-mode))
+  (vundo-glyph-alist vundo-unicode-symbols)
+  (vundo-compact-display t))
 
 ;; enhanced which-key for discoverability
 (use-package which-key

@@ -53,6 +53,8 @@
 (require 'init-term)
 (require 'init-dired)
 (require 'init-vcs)
+(require 'init-http)
+(require 'init-docker)
 ;(require 'init-tracking)
 
 ;; Load floating minibuffer last so it wins over any later hooks

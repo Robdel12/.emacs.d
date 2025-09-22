@@ -23,6 +23,20 @@
       scroll-step 1
       cursor-in-non-selected-windows nil)
 
+;; modern coding font with ligature support
+(when (display-graphic-p)
+  (let ((font-candidates '("JetBrains Mono-14"
+                          "Cascadia Code-14"
+                          "Fira Code-14"
+                          "SF Mono-14"
+                          "Monaco-14")))
+    (catch 'font-found
+      (dolist (font font-candidates)
+        (let ((font-family (car (split-string font "-"))))
+          (when (member font-family (font-family-list))
+            (set-face-attribute 'default nil :font font)
+            (throw 'font-found t)))))))
+
 ;; subtle highlight of current line in GUI
 (when (display-graphic-p)
   (global-hl-line-mode 1))
