@@ -11,7 +11,8 @@
   :custom
   (projectile-completion-system 'default)
   :config
-  (projectile-mode t))
+  (projectile-mode t)
+  (define-key projectile-command-map (kbd "s s") #'consult-ripgrep))
 
 (provide 'init-projectile)
 ;;; init-projectile.el ends here

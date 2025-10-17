@@ -21,11 +21,8 @@
   (setf (alist-get 'black apheleia-formatters)
         '("black" "-q" "-"))
 
-  ;; Mode association: try eslint_d for JS/TS if present, else prettierd/prettier
+  ;; Mode association: disable auto-formatting for JS/TS (use manual LSP format instead)
   (dolist (entry '((web-mode . (prettierd prettier))
-                   (typescript-ts-mode . (prettierd prettier))
-                   (tsx-ts-mode . (prettierd prettier))
-                   (js-ts-mode . (eslint_d prettierd prettier))
                    (json-mode . (prettierd prettier))
                    (css-mode . (prettierd prettier))
                    (scss-mode . (prettierd prettier))

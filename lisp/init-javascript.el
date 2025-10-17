@@ -31,11 +31,14 @@
   :hook ((js-mode . npm-mode)
          (js-ts-mode . npm-mode)
          (web-mode . npm-mode))
+  :config
+  ;; Unbind C-c n prefix to free it for formatting
+  (define-key npm-mode-keymap (kbd "C-c n") nil)
   :bind (:map npm-mode-keymap
-         ("C-c n r" . npm-mode-npm-run)
-         ("C-c n i" . npm-mode-npm-install)
-         ("C-c n s" . npm-mode-npm-run-script)
-         ("C-c n t" . npm-mode-npm-test)))
+         ("C-c N r" . npm-mode-npm-run)
+         ("C-c N i" . npm-mode-npm-install)
+         ("C-c N s" . npm-mode-npm-run-script)
+         ("C-c N t" . npm-mode-npm-test)))
 
 ;; Node.js REPL integration
 (use-package nodejs-repl
