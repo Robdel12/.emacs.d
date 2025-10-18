@@ -96,10 +96,17 @@
       (message "No TRAMP buffers found. Check *Messages* buffer for errors.")
       (switch-to-buffer "*Messages*"))))
 
+;; Helper to go back to local home directory
+(defun goto-local-home ()
+  "Navigate back to local home directory from remote connection."
+  (interactive)
+  (dired "~/"))
+
 ;; Keybindings - using C-c t prefix for "tramp"
 (global-set-key (kbd "C-c t p") 'connect-to-pi)
 (global-set-key (kbd "C-c t d") 'dired-pi)
 (global-set-key (kbd "C-c t b") 'show-tramp-debug)
+(global-set-key (kbd "C-c t h") 'goto-local-home)
 
 (provide 'init-tramp)
 ;;; init-tramp.el ends here

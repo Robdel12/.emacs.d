@@ -20,6 +20,7 @@ if you like.
 - **Git/GitHub**: Magit + Forge for PR/issue management directly in Emacs.
 - **Web Development**: NPM integration, Node.js REPL, REST client for API testing.
 - **Containers**: Docker management and file editing in containers.
+- **Remote Editing**: TRAMP for SSH file editing and remote project support.
 - **Modern Undo**: Vundo with visual undo tree (replaces undo-tree).
 
 ## Prerequisites (recommended)
@@ -60,6 +61,12 @@ if you like.
 
 ### Docker
 - `C-c d`: Docker management interface
+
+### Remote Files (TRAMP)
+- `C-c t d`: Open Dired on Pi
+- `C-c t p`: Connect to Pi (interactive prompt)
+- `C-c t h`: Return to local home directory
+- `C-c t b`: Show TRAMP debug buffer
 
 ### LSP
 - `C-c l`: LSP prefix (rename, code actions, etc.)
@@ -105,6 +112,7 @@ Disable per buffer with `M-x apheleia-mode` or customize `apheleia-mode-alist`.
 - `lisp/init-vcs.el` – Git (Magit) + GitHub (Forge)
 - `lisp/init-http.el` – REST client for API testing
 - `lisp/init-docker.el` – Docker management and container editing
+- `lisp/init-tramp.el` – Remote file editing via SSH
 - `lisp/init-format.el` – Apheleia unified formatting
 - `lisp/init-projectile.el` – Project management
 - `lisp/init-treemacs.el` – File tree with icons
@@ -147,6 +155,15 @@ Use `C-c C-c` to send requests.
 ### Docker
 - `C-c d`: Docker management (images, containers, networks)
 - Edit files in containers: `/docker:container_name:/path/to/file`
+
+### Remote File Editing (TRAMP)
+Edit files on remote servers via SSH:
+- `C-c t d`: Quick connect to Pi
+- `C-c t p`: Interactive connection (custom user/host/path)
+- `C-c t h`: Return to local filesystem
+- Manual: `C-x C-f /sshx:user@host:/path/to/file`
+
+Works with Dired for remote directory browsing and Projectile for remote projects. EditorConfig automatically disabled for remote files to prevent timeouts.
 
 ### Visual Undo (Vundo)
 - `uu` or `C-x u`: Open visual undo tree
