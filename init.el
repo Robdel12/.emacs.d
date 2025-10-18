@@ -55,6 +55,7 @@
 (require 'init-vcs)
 (require 'init-http)
 (require 'init-docker)
+(require 'init-tramp)
 ;(require 'init-tracking)
 
 ;; Load floating minibuffer last so it wins over any later hooks
