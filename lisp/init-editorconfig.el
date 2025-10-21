@@ -5,10 +5,11 @@
 
 (use-package editorconfig
   :diminish editorconfig-mode
-  :config
-  (editorconfig-mode 1)
+  :custom
   ;; Disable editorconfig for remote files to avoid TRAMP timeouts
-  (add-to-list 'editorconfig-exclude-regexps "^/ssh:"))
+  (editorconfig-exclude-regexps '("^/ssh:"))
+  :config
+  (editorconfig-mode 1))
 
 (provide 'init-editorconfig)
 ;;; init-editorconfig.el ends here
