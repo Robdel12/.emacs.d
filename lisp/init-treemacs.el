@@ -27,11 +27,11 @@
   :demand t
   :after (treemacs projectile))
 
-;; modern icon theme for treemacs
-(use-package treemacs-nerd-icons
+;; use all-the-icons instead of nerd-icons for better Emacs 30.x compatibility
+(use-package treemacs-all-the-icons
   :after treemacs
   :config
-  (treemacs-load-theme 'nerd-icons))
+  (treemacs-load-theme "all-the-icons"))
 
 (provide 'init-treemacs)
 ;;; init-treemacs.el ends here

@@ -4,7 +4,7 @@
 (require 'use-package)
 
 (use-package apheleia
-  :demand t
+  :defer t
   :init
   ;; Prefer project-local formatters when available
   (setq apheleia-log-only-errors t)

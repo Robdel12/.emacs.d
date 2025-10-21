@@ -46,66 +46,61 @@
 ;; custom base-16 theme
 (use-package base16-theme
   :config
-  (deftheme ww/base16-theme)
-  (defvar ww/base16-theme-colors
-    '(:base00 "#292d3e"
-      :base01 "#444267"
-      :base02 "#32374d"
-      :base03 "#676e95"
-      :base04 "#8796b0"
-      :base05 "#959dcb"
-      :base06 "#959dcb"
-      :base07 "#ffffff"
-      :base08 "#f07178"
-      :base09 "#f78c6c"
-      :base0A "#ffcb6b"
-      :base0B "#c3e88d"
-      :base0C "#89ddff"
-      :base0D "#82aaff"
-      :base0E "#c792ea"
-      :base0F "#ff5370")
-    "Custom base16 theme colors based on material palenight")
-  (base16-theme-set-faces 'ww/base16-theme ww/base16-theme-colors '(
-   (fringe :background base00)
-
-   (line-number :foreground base03 :background base00)
-   (line-number-current-line :foreground base0E :background base00)
-
-   (window-divider :foreground base00)
-   (window-divider-first-pixel :foreground base00)
-   (window-divider-last-pixel :foreground base00)
-
-   (internal-border :background base00)
-   (child-frame-border :background base03)
-
-   (vertico-current :foreground base09)
-
-   (mode-line :foreground base05 :background base02)
-   (mode-line-inactive :foreground base03 :background base01)
-
-   (diff-hl-change :background base0E)
-   (diff-hl-delete :background base08)
-   (diff-hl-insert :background base0B)
-
-   (markdown-header-face :weight bold :inherit default)
-
-   (web-mode-html-tag-face :inherit font-lock-constant-face)
-   (web-mode-html-attr-name-face :inherit font-lock-variable-name-face)
-   (web-mode-html-attr-value-face :inherit font-lock-preprocessor-face)))
-  (base16-theme-define 'ww/base16-theme ww/base16-theme-colors)
-
-  (setq underline-minimum-offset 5)
   (setq base16-theme-256-color-source 'colors)
 
-  (if (daemonp)
-    (add-hook 'after-make-frame-functions (lambda (frame)
+  ;; Create custom theme using base16 infrastructure
+  (deftheme ww/base16-theme "Custom base16 theme")
+
+  (let ((colors '(:base00 "#292d3e"
+                  :base01 "#444267"
+                  :base02 "#32374d"
+                  :base03 "#676e95"
+                  :base04 "#8796b0"
+                  :base05 "#959dcb"
+                  :base06 "#959dcb"
+                  :base07 "#ffffff"
+                  :base08 "#f07178"
+                  :base09 "#f78c6c"
+                  :base0A "#ffcb6b"
+                  :base0B "#c3e88d"
+                  :base0C "#89ddff"
+                  :base0D "#82aaff"
+                  :base0E "#c792ea"
+                  :base0F "#ff5370")))
+    (base16-theme-set-faces 'ww/base16-theme colors '(
+     (fringe :background base00)
+     (line-number :foreground base03 :background base00)
+     (line-number-current-line :foreground base0E :background base00)
+     (window-divider :foreground base00)
+     (window-divider-first-pixel :foreground base00)
+     (window-divider-last-pixel :foreground base00)
+     (internal-border :background base00)
+     (child-frame-border :background base03)
+     (vertico-current :foreground base09)
+     (mode-line :foreground base05 :background base02)
+     (mode-line-inactive :foreground base03 :background base01)
+     (diff-hl-change :background base0E)
+     (diff-hl-delete :background base08)
+     (diff-hl-insert :background base0B)
+     (markdown-header-face :weight bold :inherit default)
+     (web-mode-html-tag-face :inherit font-lock-constant-face)
+     (web-mode-html-attr-name-face :inherit font-lock-variable-name-face)
+     (web-mode-html-attr-value-face :inherit font-lock-preprocessor-face)))
+    (base16-theme-define 'ww/base16-theme colors))
+
+  (setq underline-minimum-offset 5)
+
+  ;; Load theme immediately and also set up for daemon frames
+  (enable-theme 'ww/base16-theme)
+  (ww/activate-operator-mono)
+
+  ;; Also ensure theme loads for daemon frames
+  (add-hook 'after-make-frame-functions
+    (lambda (frame)
       (with-selected-frame frame
-        (if (window-system frame) (progn
+        (when (window-system frame)
           (enable-theme 'ww/base16-theme)
           (ww/activate-operator-mono))))))
-    (progn
-      (enable-theme 'ww/base16-theme)
-      (ww/activate-operator-mono))))
 
 ;; nerd-icons are configured in init-modeline.el
 
