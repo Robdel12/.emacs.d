@@ -6,7 +6,7 @@
 ;; Dockerfile editing
 (use-package dockerfile-mode
   :mode "Dockerfile\\'"
-  :hook (dockerfile-mode . flycheck-mode))
+  :hook (dockerfile-mode . flymake-mode))
 
 ;; Docker compose support
 (use-package docker-compose-mode

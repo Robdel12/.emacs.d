@@ -36,7 +36,7 @@
 
 ;; extra completion sources
 (use-package cape
-  :init
+  :config
   ;; Keep LSP first when present; add useful fallbacks afterward
   (add-to-list 'completion-at-point-functions #'cape-file t)
   (add-to-list 'completion-at-point-functions #'cape-dabbrev t)
@@ -73,9 +73,8 @@
          ("M-g I" . consult-imenu-multi))
   :hook (completion-list-mode . consult-preview-at-point-mode)
   :init
-  ;; Use Projectile to resolve project root for consult- commands
-  (setq consult-project-function (lambda (_) (when (fboundp 'projectile-project-root)
-                                               (projectile-project-root))))
+  ;; Use built-in project.el to resolve project root for consult commands
+  (setq consult-project-function #'consult--default-project-function)
   (setq register-preview-delay 0.5
         register-preview-function #'consult-register-format)
   (advice-add #'register-preview :override #'consult-register-window)
@@ -114,25 +113,6 @@
 (use-package embark-consult
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
-
-;; modern ligature support
-(use-package ligature
-  :config
-  (ligature-set-ligatures 'prog-mode '("--" "---" "==" "===" "!=" "!==" "=!="
-                                       "=:=" "=/=" "<=" ">=" "&&" "&&&" "&=" "++" "+++" "***" ";;" "!!"
-                                       "??" "???" "?:" "?." "?=" "<:" ":<" ":>" ">:" "<:<" "<>" "<<<" ">>>"
-                                       "<<" ">>" "||" "-|" "_|_" "|-" "||-" "|=" "||=" "##" "###" "####"
-                                       "#{" "#[" "]#" "#(" "#?" "#_" "#_(" "#:" "#!" "#=" "^=" "<$>" "<$"
-                                       "$>" "<+>" "<+" "+>" "<*>" "<*" "*>" "</" "</>" "/>" "<!--" "<#--"
-                                       "-->" "->" "->>" "<<-" "<-" "<=<" "=<<" "<<=" "<==" "<=>" "<==>"
-                                       "==>" "=>" "=>>" ">=>" ">>=" ">>-" ">-" "-<" "-<<" ">->" "<-<" "<-|"
-                                       "<=|" "|=>" "|->" "<->" "<~~" "<~" "<~>" "~~" "~~>" "~>" "~-" "-~"
-                                       "~@" "[||]" "|]" "[|" "|}" "{|" "[<" ">]" "|>" "<|" "||>" "<||"
-                                       "|||>" "<|||" "<|>" "..." ".." ".=" "..<" ".?" "::" ":::" ":=" "::="
-                                       ":?" ":?>" "//" "///" "/*" "*/" "/=" "//=" "/==" "@_" "__"))
-  (global-ligature-mode t))
-
-;; Floating minibuffer is configured in init-float-minibuffer.el (loaded last)
 
 ;; enhanced help buffers
 (use-package helpful

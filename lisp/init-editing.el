@@ -3,9 +3,6 @@
 ;;; Code:
 (require 'use-package)
 
-;; Make sure `copilot-mode` symbol exists before the real package is loaded
-(autoload 'copilot-mode "copilot" nil t)
-
 ;; key-chord support
 (use-package key-chord
   :ensure t)
@@ -56,8 +53,9 @@
 ;; show matching parens
 (show-paren-mode t)
 
-;; pixel precision scrolling
-(pixel-scroll-mode 1)
+;; pixel precision scrolling (Emacs 29+)
+(when (fboundp 'pixel-scroll-precision-mode)
+  (pixel-scroll-precision-mode 1))
 
 ;; camelCase-aware word motions in code
 (add-hook 'prog-mode-hook #'subword-mode)
@@ -254,20 +252,19 @@
 
 ;; copilot for AI assistance
 (use-package copilot
-  :ensure nil
-  :init
-  ;; Install via package-vc if not already installed
-  (unless (package-installed-p 'copilot)
-    (package-vc-install "https://github.com/copilot-emacs/copilot.el"))
+  :vc (:url "https://github.com/copilot-emacs/copilot.el"
+       :rev :newest
+       :branch "main")
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+         ("<tab>" . copilot-accept-completion)
+         ("TAB" . copilot-accept-completion)
+         ("C-<tab>" . copilot-accept-completion-by-word)
+         ("M-n" . copilot-next-completion)
+         ("M-p" . copilot-previous-completion))
   :config
-  ;; Disable if language server not found (install with: npm install -g @github/copilot-language-server)
-  (when (not (executable-find "copilot-language-server"))
-    (message "Copilot language server not found. Install with: npm install -g @github/copilot-language-server")))
-
-(with-eval-after-load 'copilot
-  (add-hook 'prog-mode-hook #'copilot-mode)
-  (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
-  (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion))
+  (unless (executable-find "copilot-language-server")
+    (message "Copilot: Install language server with: npm install -g @github/copilot-language-server")))
 
 (provide 'init-editing)
 ;;; init-editing.el ends here

@@ -10,7 +10,7 @@
          (ruby-mode . lsp-deferred)
          (lsp-mode . lsp-enable-which-key-integration))
   :bind (:map lsp-mode-map
-         ("C-c n" . lsp-format-buffer))
+         ("C-c l f" . lsp-format-buffer))
   :custom
   (lsp-eslint-package-manager "yarn")
   :config
@@ -49,10 +49,6 @@
   :bind (:map lsp-mode-map
          ([remap xref-find-apropos] . consult-lsp-symbols)))
 (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
-
-;; The paths to lsp-mode and clients needs to be added to load-path
-(add-to-list 'load-path (expand-file-name "lib/lsp-mode" user-emacs-directory))
-(add-to-list 'load-path (expand-file-name "lib/lsp-mode/clients" user-emacs-directory))
 
 (provide 'init-lsp)
 ;;; init-lsp.el ends here

@@ -50,18 +50,11 @@
               vc-ignore-dir-regexp
               tramp-file-name-regexp))
 
-;; Enable remote directory tracking in shell
-(setq tramp-shell-prompt-pattern
-      "^[^$>\n]*[#$%>] *\\(\[[0-9;]*[a-zA-Z] *\\)*")
 
 ;; Better handling of remote paths
 (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
 
-;; Projectile integration for remote projects
-(defadvice projectile-project-root (around ignore-remote first activate)
-  "Allows projectile to work on remote projects via TRAMP."
-  (unless (file-remote-p default-directory)
-    ad-do-it))
+;; project.el already handles remote files gracefully, no special advice needed
 
 ;; Helper function to connect to Pi
 (defun connect-to-pi ()

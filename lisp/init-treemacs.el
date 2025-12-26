@@ -23,9 +23,7 @@
   :demand t
   :after (treemacs magit))
 
-(use-package treemacs-projectile
-  :demand t
-  :after (treemacs projectile))
+;; treemacs-projectile removed - using built-in project.el instead
 
 ;; use all-the-icons instead of nerd-icons for better Emacs 30.x compatibility
 (use-package treemacs-all-the-icons

@@ -23,7 +23,7 @@
         doom-modeline-vcs-max-length 20
         doom-modeline-checker-simple-format t
         ;; Integrations
-        doom-modeline-project-detection 'projectile
+        doom-modeline-project-detection 'project
         doom-modeline-lsp t
         doom-modeline-indent-info t
         ;; Display env versions for common web stacks

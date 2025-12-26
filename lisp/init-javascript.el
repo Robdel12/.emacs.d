@@ -20,7 +20,7 @@
 ;; Enhanced JSON support
 (use-package json-mode
   :mode "\\.json\\'"
-  :hook (json-mode . flycheck-mode))
+  :hook (json-mode . flymake-mode))
 
 ;; Prefer Apheleia for formatting; keep prettier-js available for manual use
 (use-package prettier-js
