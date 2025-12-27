@@ -26,7 +26,7 @@
   (css-indent-offset 2)
   :init
   (defun ww/web-mode-insert-space (arg)
-    "Insert spaces between brackets & parens."
+    "Insert spaces between brackets and parens."
     (interactive "*P")
     (let ((prev (char-before))
           (next (char-after)))
@@ -36,7 +36,7 @@
                (string-match-p "[])}]" (string next)))
           (save-excursion (self-insert-command 1)))))
   (defun ww/web-mode-delete-space (arg &optional killp)
-    "Delete spaces between brakcets & parens."
+    "Delete spaces between brackets and parens."
     (interactive "*p\nP")
     (let ((prev (char-before))
           (next (char-after))
@@ -47,8 +47,8 @@
           (delete-char 1))
       (backward-delete-char-untabify arg killp)))
   :hook (web-mode . (lambda ()
-                      (local-set-key " " 'ww/web-mode-insert-space)
-                      (local-set-key "\177" 'ww/web-mode-delete-space)
+                      (local-set-key (kbd "SPC") 'ww/web-mode-insert-space)
+                      (local-set-key (kbd "DEL") 'ww/web-mode-delete-space)
                       ;; Disable smartparens in web-mode, use electric-pair instead
                       (smartparens-mode -1)
                       (electric-pair-local-mode 1))))
