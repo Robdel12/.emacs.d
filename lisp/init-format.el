@@ -18,6 +18,8 @@
         '("bundle" "exec" "rubocop" "--auto-correct" "--stdin" filepath "--format" "files"))
   (setf (alist-get 'black apheleia-formatters)
         '("black" "-q" "-"))
+  (setf (alist-get 'mix-format apheleia-formatters)
+        '("mix" "format" "-"))
 
   ;; Mode associations
   (dolist (entry '((web-mode . biome)
@@ -25,7 +27,9 @@
                    (css-mode . biome)
                    (scss-mode . biome)
                    (ruby-mode . rubocop)
-                   (python-mode . black)))
+                   (python-mode . black)
+                   (elixir-mode . mix-format)
+                   (heex-ts-mode . mix-format)))
     (setf (alist-get (car entry) apheleia-mode-alist)
           (cdr entry)))
 

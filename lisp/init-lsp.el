@@ -8,6 +8,8 @@
   :hook ((web-mode . lsp-deferred)
          (js-ts-mode . lsp-deferred)
          (ruby-mode . lsp-deferred)
+         (elixir-mode . lsp-deferred)
+         (heex-ts-mode . lsp-deferred)
          (lsp-mode . lsp-enable-which-key-integration))
   :bind (:map lsp-mode-map
          ("C-c l f" . lsp-format-buffer))
@@ -29,9 +31,13 @@
           "[/\\\\]dist$" "[/\\\\]build$" "[/\\\\]\\.cache$" "[/\\\\]\\.vscode$"
           "[/\\\\]\\.DS_Store$" "[/\\\\]\\.ccls-cache$" "[/\\\\]\\.venv$" "[/\\\\]__pycache__$"
           "[/\\\\]\\.mypy_cache$" "[/\\\\]\\.pytest_cache$" "[/\\\\]coverage$"
-          "[/\\\\]\\.nyc_output$" "[/\\\\]\\.next$" "[/\\\\]\\.nuxt$" "[/\\\\]public$")
+          "[/\\\\]\\.nyc_output$" "[/\\\\]\\.next$" "[/\\\\]\\.nuxt$" "[/\\\\]public$"
+          "[/\\\\]_build$" "[/\\\\]deps$" "[/\\\\]\\.elixir_ls$")
         ;; Disable lsp-eslint since we use Biome
-        lsp-eslint-enable nil))
+        lsp-eslint-enable nil)
+
+  ;; Use elixir-ls for Elixir
+  (setq lsp-elixir-server-command '("elixir-ls")))
 
 ;; Biome LSP support
 (use-package lsp-biome
