@@ -22,15 +22,19 @@
 
 ;; Modern dired UI with dirvish
 (use-package dirvish
-  :config
+  :ensure t
+  :init
   (dirvish-override-dired-mode)
   :custom
+  (dirvish-attributes '(nerd-icons file-size vc-state git-msg))
   (dirvish-quick-access-entries
    '(("h" "~/" "Home")
      ("d" "~/Downloads/" "Downloads")
-     ("p" "~/Code/" "Projects")))
+     ("D" "~/Developer/" "Developer")))
   :bind
   (:map dirvish-mode-map
+        ("j" . nil)
+        ("J" . nil)
         ("a" . dirvish-quick-access)
         ("f" . dirvish-file-info-menu)
         ("y" . dirvish-yank-menu)
@@ -49,7 +53,7 @@
         ("M-e" . dirvish-emerge-menu)
         ("M-j" . dirvish-fd-jump)))
 
-;; nerd-icons integration - dirvish has built-in support
+;; nerd-icons integration
 (use-package nerd-icons
   :if (display-graphic-p))
 
