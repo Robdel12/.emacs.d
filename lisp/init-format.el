@@ -9,26 +9,21 @@
   ;; Prefer project-local formatters when available
   (setq apheleia-log-only-errors t)
   :config
-  ;; Formatters: prefer prettierd if available, fall back to prettier
-  (setf (alist-get 'prettierd apheleia-formatters)
-        '("prettierd" filepath))
-  (setf (alist-get 'prettier apheleia-formatters)
-        '("prettier" "--stdin-filepath" filepath))
-  (setf (alist-get 'eslint_d apheleia-formatters)
-        '("eslint_d" "--fix-to-stdout" "--stdin" "--stdin-filename" filepath))
+  ;; Biome for JS/TS/JSON/CSS
+  (setf (alist-get 'biome apheleia-formatters)
+        '("biome" "format" "--stdin-file-path" filepath))
+
+  ;; Other formatters
   (setf (alist-get 'rubocop apheleia-formatters)
         '("bundle" "exec" "rubocop" "--auto-correct" "--stdin" filepath "--format" "files"))
   (setf (alist-get 'black apheleia-formatters)
         '("black" "-q" "-"))
 
-  ;; Mode association: disable auto-formatting for JS/TS (use manual LSP format instead)
-  (dolist (entry '((web-mode . (prettierd prettier))
-                   (json-mode . (prettierd prettier))
-                   (css-mode . (prettierd prettier))
-                   (scss-mode . (prettierd prettier))
-                   (yaml-mode . prettier)
-                   (markdown-mode . (prettierd prettier))
-                   (gfm-mode . (prettierd prettier))
+  ;; Mode associations
+  (dolist (entry '((web-mode . biome)
+                   (json-mode . biome)
+                   (css-mode . biome)
+                   (scss-mode . biome)
                    (ruby-mode . rubocop)
                    (python-mode . black)))
     (setf (alist-get (car entry) apheleia-mode-alist)

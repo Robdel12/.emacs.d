@@ -17,8 +17,8 @@
 (unless (server-running-p) (server-start))
 
 ;; initial configs
-(require 'init-elpa)
 (require 'init-ui)
+(require 'init-elpa)
 (require 'init-treesit)
 
 ;; language specific configs

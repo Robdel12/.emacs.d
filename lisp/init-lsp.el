@@ -11,8 +11,6 @@
          (lsp-mode . lsp-enable-which-key-integration))
   :bind (:map lsp-mode-map
          ("C-c l f" . lsp-format-buffer))
-  :custom
-  (lsp-eslint-package-manager "yarn")
   :config
   (setf (alist-get 'web-mode lsp--formatting-indent-alist) 'web-mode-code-indent-offset)
   (add-to-list 'lsp-language-id-configuration '("\\.hbs?\\'" . "html"))
@@ -32,8 +30,13 @@
           "[/\\\\]\\.DS_Store$" "[/\\\\]\\.ccls-cache$" "[/\\\\]\\.venv$" "[/\\\\]__pycache__$"
           "[/\\\\]\\.mypy_cache$" "[/\\\\]\\.pytest_cache$" "[/\\\\]coverage$"
           "[/\\\\]\\.nyc_output$" "[/\\\\]\\.next$" "[/\\\\]\\.nuxt$" "[/\\\\]public$")
-        ;lsp-eslint-server-command '("vscode-eslint-language-server" "--stdio")
-        lsp-eslint-validate '("javascript" "javascriptreact")))
+        ;; Disable lsp-eslint since we use Biome
+        lsp-eslint-enable nil))
+
+;; Biome LSP support
+(use-package lsp-biome
+  :vc (:url "https://github.com/cxa/lsp-biome" :rev :newest)
+  :after lsp-mode)
 
 (use-package lsp-ui
   :commands lsp-ui-mode

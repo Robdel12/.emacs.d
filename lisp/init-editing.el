@@ -53,11 +53,9 @@
 ;; show matching parens
 (show-paren-mode t)
 
-;; smooth scrolling with good-scroll
-(use-package good-scroll
-  :if (display-graphic-p)
-  :config
-  (good-scroll-mode 1))
+;; pixel precision scrolling (Emacs 29+)
+(when (fboundp 'pixel-scroll-precision-mode)
+  (pixel-scroll-precision-mode 1))
 
 ;; camelCase-aware word motions in code
 (add-hook 'prog-mode-hook #'subword-mode)
@@ -251,43 +249,6 @@
     (forward-line)))
 
 (global-set-key (kbd "s-/") 'rd/comment-line-or-region)
-
-;; pulsar - pulse the current line on jump/scroll
-;; helps you track the cursor after navigation commands
-(use-package pulsar
-  :vc (:url "https://github.com/protesilaos/pulsar"
-       :rev :newest)
-  :config
-  (setq pulsar-pulse t
-        pulsar-delay 0.05
-        pulsar-iterations 10
-        pulsar-face 'pulsar-magenta
-        pulsar-highlight-face 'pulsar-yellow)
-  (pulsar-global-mode 1)
-  ;; Pulse on these commands
-  (add-to-list 'pulsar-pulse-functions 'avy-goto-char)
-  (add-to-list 'pulsar-pulse-functions 'avy-goto-word-1)
-  (add-to-list 'pulsar-pulse-functions 'avy-goto-line)
-  (add-to-list 'pulsar-pulse-functions 'consult-line))
-
-;; indent-bars - show vertical lines at indentation levels
-;; modern alternative to highlight-indent-guides
-(use-package indent-bars
-  :vc (:url "https://github.com/jdtsmith/indent-bars"
-       :rev :newest)
-  :hook (prog-mode . indent-bars-mode)
-  :custom
-  (indent-bars-treesit-support t)
-  (indent-bars-no-descend-string t)
-  (indent-bars-treesit-ignore-blank-lines-types '("module"))
-  (indent-bars-width-frac 0.2)
-  (indent-bars-pad-frac 0.1)
-  (indent-bars-color-by-depth '(:regexp "outline-\\([0-9]+\\)" :blend 1))
-  (indent-bars-highlight-current-depth '(:blend 0.5)))
-
-;; focus - dim surrounding text for distraction-free editing
-(use-package focus
-  :bind ("C-c F" . focus-mode))
 
 ;; copilot for AI assistance
 (use-package copilot

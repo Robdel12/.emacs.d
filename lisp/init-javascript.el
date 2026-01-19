@@ -19,12 +19,8 @@
 
 ;; Enhanced JSON support
 (use-package json-mode
-  :mode "\\.json\\'"
-  :hook (json-mode . flymake-mode))
+  :mode "\\.json\\'")
 
-;; Prefer Apheleia for formatting; keep prettier-js available for manual use
-(use-package prettier-js
-  :defer t)
 
 ;; NPM script runner and package management
 (use-package npm-mode
@@ -32,7 +28,6 @@
          (js-ts-mode . npm-mode)
          (web-mode . npm-mode))
   :config
-  ;; Unbind C-c n prefix to free it for formatting
   (define-key npm-mode-keymap (kbd "C-c n") nil)
   :bind (:map npm-mode-keymap
          ("C-c N r" . npm-mode-npm-run)
