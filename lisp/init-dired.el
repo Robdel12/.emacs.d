@@ -23,7 +23,7 @@
 ;; Modern dired UI with dirvish
 (use-package dirvish
   :ensure t
-  :init
+  :config
   (dirvish-override-dired-mode)
   :custom
   (dirvish-attributes '(nerd-icons file-size vc-state git-msg))

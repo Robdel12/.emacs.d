@@ -25,21 +25,10 @@
          ("C-c m l" . mix-last-command)
          ("C-c m x" . mix-execute-task)))
 
-;; Interactive Elixir REPL
-(use-package inf-elixir
-  :bind (:map elixir-mode-map
-         ("C-c C-z" . inf-elixir-project)
-         ("C-c C-c" . inf-elixir-send-line)
-         ("C-c C-r" . inf-elixir-send-region)
-         ("C-c C-b" . inf-elixir-send-buffer)))
-
-;; ExUnit test runner with compilation-mode integration
-(use-package exunit
-  :hook (elixir-mode . exunit-mode)
-  :bind (:map elixir-mode-map
-         ("C-c e a" . exunit-verify-all)
-         ("C-c e s" . exunit-verify-single)
-         ("C-c e r" . exunit-rerun)))
+;; NOTE: inf-elixir and exunit packages were removed from MELPA.
+;; The mix package above provides basic test running via mix-test commands.
+;; For REPL, use M-x shell and run iex manually, or consider elixir-ts-mode
+;; which is built into Emacs 29+ with tree-sitter.
 
 (provide 'init-elixir)
 ;;; init-elixir.el ends here

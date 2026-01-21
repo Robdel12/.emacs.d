@@ -251,7 +251,9 @@
 (global-set-key (kbd "s-/") 'rd/comment-line-or-region)
 
 ;; copilot for AI assistance
+;; REQUIRES: npm install -g @github/copilot-language-server
 (use-package copilot
+  :if (executable-find "copilot-language-server")
   :vc (:url "https://github.com/copilot-emacs/copilot.el"
        :rev :newest
        :branch "main")
@@ -261,10 +263,7 @@
          ("TAB" . copilot-accept-completion)
          ("C-<tab>" . copilot-accept-completion-by-word)
          ("M-n" . copilot-next-completion)
-         ("M-p" . copilot-previous-completion))
-  :config
-  (unless (executable-find "copilot-language-server")
-    (message "Copilot: Install language server with: npm install -g @github/copilot-language-server")))
+         ("M-p" . copilot-previous-completion)))
 
 (provide 'init-editing)
 ;;; init-editing.el ends here
