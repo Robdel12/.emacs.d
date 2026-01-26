@@ -19,9 +19,14 @@
       fast-but-imprecise-scrolling t
       redisplay-skip-fontification-on-input t
       scroll-conservatively 101
-      scroll-margin 4
       scroll-step 1
+      scroll-preserve-screen-position t
       cursor-in-non-selected-windows nil)
+
+;; pixel-scroll-precision settings for macOS trackpad
+(when (display-graphic-p)
+  (setq pixel-scroll-precision-large-scroll-height 40.0
+        pixel-scroll-precision-interpolate-page t))
 
 ;; modern coding font with ligature support
 (when (display-graphic-p)
