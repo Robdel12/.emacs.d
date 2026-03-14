@@ -39,7 +39,11 @@
       (dolist (font font-candidates)
         (let ((font-family (car (split-string font "-"))))
           (when (member font-family (font-family-list))
-            (set-face-attribute 'default nil :font font)
+            ;; Set the frame font directly so we don't clobber the `default`
+            ;; face background/foreground through Emacs's runtime `changed`
+            ;; theme layer after crashes or face recomputation.
+            (add-to-list 'default-frame-alist `(font . ,font))
+            (set-frame-parameter nil 'font font)
             (throw 'font-found t)))))))
 
 ;; subtle highlight of current line in GUI

@@ -8,14 +8,21 @@
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 (add-to-list 'default-frame-alist '(border-width . 1))
 
+;; Core frame colors. These are also applied explicitly after theme load
+;; because the base face/frame background can occasionally fall back to
+;; plain black after crashes or partial face recomputation.
+(defconst ww/theme-base00 "#292d3e")
+(defconst ww/theme-base05 "#959dcb")
+(defconst ww/theme-base08 "#f07178")
+
 ;; font setup
 (setq-default line-spacing 0.6)
 
 (defun ww/activate-operator-mono ()
   "Activate the Operator Mono font if available."
   (when (find-font (font-spec :name "Operator Mono Lig"))
-    (add-to-list 'default-frame-alist '(font . "Operator Mono Lig"))
-    (set-face-attribute 'default nil :font "Operator Mono Lig" :height 130)
+    (add-to-list 'default-frame-alist '(font . "Operator Mono Lig-13"))
+    (set-frame-parameter nil 'font "Operator Mono Lig-13")
 
     ;; modern ligatures handled by ligature.el package
     t
@@ -32,6 +39,16 @@
       (set-face-italic 'web-mode-html-attr-name-face t)
       (set-face-italic 'web-mode-css-property-name-face t)
       (set-face-italic 'web-mode-css-pseudo-class-face t))))
+
+(defun ww/apply-base-frame-colors (&optional frame)
+  "Apply the theme's base colors to FRAME or the selected frame."
+  (with-selected-frame (or frame (selected-frame))
+    (set-face-attribute 'default nil
+                        :foreground ww/theme-base05
+                        :background ww/theme-base00)
+    (set-background-color ww/theme-base00)
+    (set-foreground-color ww/theme-base05)
+    (set-cursor-color ww/theme-base08)))
 
 ;; rainbow mode for colors
 (use-package rainbow-mode
@@ -51,15 +68,15 @@
   ;; Create custom theme using base16 infrastructure
   (deftheme ww/base16-theme "Custom base16 theme")
 
-  (let ((colors '(:base00 "#292d3e"
+  (let ((colors `(:base00 ,ww/theme-base00
                   :base01 "#444267"
                   :base02 "#32374d"
                   :base03 "#676e95"
                   :base04 "#8796b0"
-                  :base05 "#959dcb"
-                  :base06 "#959dcb"
+                  :base05 ,ww/theme-base05
+                  :base06 ,ww/theme-base05
                   :base07 "#ffffff"
-                  :base08 "#f07178"
+                  :base08 ,ww/theme-base08
                   :base09 "#f78c6c"
                   :base0A "#ffcb6b"
                   :base0B "#c3e88d"
@@ -93,6 +110,7 @@
   ;; Load theme immediately and also set up for daemon frames
   (enable-theme 'ww/base16-theme)
   (ww/activate-operator-mono)
+  (ww/apply-base-frame-colors)
 
   ;; Also ensure theme loads for daemon frames
   (add-hook 'after-make-frame-functions
@@ -100,7 +118,8 @@
       (with-selected-frame frame
         (when (window-system frame)
           (enable-theme 'ww/base16-theme)
-          (ww/activate-operator-mono))))))
+          (ww/activate-operator-mono)
+          (ww/apply-base-frame-colors frame)))))))
 
 ;; nerd-icons are configured in init-modeline.el
 
