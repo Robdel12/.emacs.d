@@ -4,7 +4,10 @@
 (require 'use-package)
 
 (use-package treemacs
-  :demand t
+  :commands (treemacs
+             treemacs-select-window
+             treemacs-add-and-display-current-project-exclusively)
+  :bind ("C-c e" . treemacs)
   :config
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
@@ -20,7 +23,6 @@
 ;; using default treemacs theme for better compatibility
 
 (use-package treemacs-magit
-  :demand t
   :after (treemacs magit))
 
 ;; treemacs-projectile removed - using built-in project.el instead

@@ -6,7 +6,10 @@
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
   :hook ((web-mode . lsp-deferred)
+         (js-mode . lsp-deferred)
          (js-ts-mode . lsp-deferred)
+         (typescript-ts-mode . lsp-deferred)
+         (tsx-ts-mode . lsp-deferred)
          (ruby-mode . lsp-deferred)
          (elixir-mode . lsp-deferred)
          (heex-ts-mode . lsp-deferred)
@@ -33,7 +36,7 @@
           "[/\\\\]\\.mypy_cache$" "[/\\\\]\\.pytest_cache$" "[/\\\\]coverage$"
           "[/\\\\]\\.nyc_output$" "[/\\\\]\\.next$" "[/\\\\]\\.nuxt$" "[/\\\\]public$"
           "[/\\\\]_build$" "[/\\\\]deps$" "[/\\\\]\\.elixir_ls$")
-        ;; Disable lsp-eslint since we use Biome
+        ;; Disable lsp-eslint since Biome handles JS-family linting/formatting.
         lsp-eslint-enable nil)
 
   ;; Use elixir-ls for Elixir

@@ -14,8 +14,6 @@
          ("\\.djhtml\\'" . web-mode)
          ("\\.html?\\'" . web-mode)
          ("\\.hbs?\\'" . web-mode)
-         ("\\.[tj]sx?\\'" . web-mode)
-         ("\\.css?\\'" . web-mode)
          ("\\.astro\\'" . web-mode))
   :custom
   (web-mode-content-types-alist '(("jsx" . "\\.[mc]?js[x]?\\'")))
@@ -46,12 +44,22 @@
                (string-match "[[({]" (string pprev)))
           (delete-char 1))
       (backward-delete-char-untabify arg killp)))
+  (defun rd/web-mode-js-family-p ()
+    "Return non-nil when the current web-mode buffer is JS-family code."
+    (and buffer-file-name
+         (string-match-p "\\.\\([cm]?js\\|jsx\\|ts\\|tsx\\)\\'"
+                         buffer-file-name)))
+  (defun rd/web-mode-setup ()
+    "Configure web-mode buffer-local behavior."
+    (local-set-key (kbd "SPC") 'ww/web-mode-insert-space)
+    (local-set-key (kbd "DEL") 'ww/web-mode-delete-space)
+    ;; Disable smartparens in web-mode, use electric-pair instead
+    (smartparens-mode -1)
+    (electric-pair-local-mode 1)
+    (when (rd/web-mode-js-family-p)
+      (setq-local apheleia-formatter 'biome)))
   :hook (web-mode . (lambda ()
-                      (local-set-key (kbd "SPC") 'ww/web-mode-insert-space)
-                      (local-set-key (kbd "DEL") 'ww/web-mode-delete-space)
-                      ;; Disable smartparens in web-mode, use electric-pair instead
-                      (smartparens-mode -1)
-                      (electric-pair-local-mode 1))))
+                      (rd/web-mode-setup))))
 
 ;; emmet
 (use-package emmet-mode

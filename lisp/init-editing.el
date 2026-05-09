@@ -64,10 +64,17 @@
 (when (fboundp 'global-so-long-mode)
   (global-so-long-mode 1))
 
-;; autosave buffers with names
+;; autosave local, modified file buffers before changing context
+(defun rd/autosave-file-buffer-p ()
+  "Return non-nil when the current buffer is safe to autosave."
+  (and buffer-file-name
+       (buffer-modified-p)
+       (not (file-remote-p buffer-file-name))))
+
 (defun rd/autosave-if-buffer-file (&rest _)
-  "Autosave current buffer if it's visiting a file."
-  (when buffer-file-name (save-buffer)))
+  "Autosave the current file buffer when it is local and modified."
+  (when (rd/autosave-file-buffer-p)
+    (save-buffer)))
 
 (advice-add 'switch-to-buffer :before #'rd/autosave-if-buffer-file)
 (advice-add 'other-window :before #'rd/autosave-if-buffer-file)

@@ -7,10 +7,9 @@
   :diminish editorconfig-mode
   :custom
   ;; Disable editorconfig for remote files to avoid TRAMP timeouts
-  (editorconfig-exclude-regexps '("^/ssh:"))
+  (editorconfig-exclude-regexps '("^/[^:]+:"))
   :config
   (editorconfig-mode 1))
 
 (provide 'init-editorconfig)
 ;;; init-editorconfig.el ends here
-

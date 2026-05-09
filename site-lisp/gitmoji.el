@@ -98,17 +98,16 @@ Default: t.")
 
 (defun gitmoji-insert--action (g)
   "Insert a gitmoji, G, into the current buffer."
-  (let ((utf8 (cadddr g)) (shortcode (caddr g)))
+  (let ((shortcode (cadr g))
+        (utf8 (caddr g)))
     (insert (if gitmoji--insert-utf8-emoji utf8 shortcode) " ")))
 
 (defun gitmoji-insert ()
   "Choose a gitmoji and insert it in the current buffer."
   (interactive)
-  (let ((candidates (gitmoji-insert--candidates)))
-    (ivy-read
-     "Choose a gitmoji: "
-     candidates
-     :action #'gitmoji-insert--action)))
+  (let* ((candidates (gitmoji-insert--candidates))
+         (choice (completing-read "Choose a gitmoji: " candidates nil t)))
+    (gitmoji-insert--action (cdr (assoc choice candidates)))))
 
 ;;;###autoload
 (define-minor-mode gitmoji-commit-mode

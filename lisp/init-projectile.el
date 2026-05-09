@@ -5,16 +5,14 @@
 (require 'use-package)
 (require 'project)
 
+(defun rd/project-magit-status ()
+  "Open Magit at the current project root."
+  (interactive)
+  (magit-status (project-root (project-current t))))
+
 ;; Configure project.el
 (setq project-switch-commands
-      '((project-find-file "Find file" ?f)
-        (project-find-regexp "Find regexp" ?g)
-        (project-find-dir "Find directory" ?d)
-        (project-dired "Dired" ?D)
-        (project-vc-dir "VC-Dir" ?v)
-        (project-eshell "Eshell" ?e)
-        (project-shell "Shell" ?s)
-        (consult-ripgrep "Ripgrep" ?r)))
+      'rd/project-magit-status)
 
 ;; Remember projects across sessions
 (setq project-list-file (expand-file-name "projects" user-emacs-directory))
@@ -26,7 +24,8 @@
 ;; Additional convenient bindings
 (with-eval-after-load 'project
   (define-key project-prefix-map (kbd "s") #'consult-ripgrep)
-  (define-key project-prefix-map (kbd "b") #'consult-project-buffer))
+  (define-key project-prefix-map (kbd "b") #'consult-project-buffer)
+  (define-key project-prefix-map (kbd "m") #'rd/project-magit-status))
 
 ;; Helper to run multi-term in project root
 (defun project-run-term ()

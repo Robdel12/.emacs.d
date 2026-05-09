@@ -6,13 +6,11 @@
 ;; Core Elixir mode
 (use-package elixir-mode
   :mode (("\\.ex\\'" . elixir-mode)
-         ("\\.exs\\'" . elixir-mode))
-  :hook ((elixir-mode . flymake-mode)))
+         ("\\.exs\\'" . elixir-mode)))
 
 ;; HEEx templates for Phoenix LiveView
 (use-package heex-ts-mode
-  :mode "\\.heex\\'"
-  :hook ((heex-ts-mode . flymake-mode)))
+  :mode "\\.heex\\'")
 
 ;; Mix build tool integration
 (use-package mix

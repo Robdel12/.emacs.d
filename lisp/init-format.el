@@ -22,8 +22,13 @@
         '("mix" "format" "-"))
 
   ;; Mode associations
-  (dolist (entry '((web-mode . biome)
-                   (json-mode . biome)
+  (dolist (entry '((js-ts-mode . biome)
+                   (js-mode . biome)
+                   (typescript-ts-mode . biome)
+                   (tsx-ts-mode . biome)
+                   (json-ts-mode . biome)
+                   (js-json-mode . biome)
+                   (css-ts-mode . biome)
                    (css-mode . biome)
                    (scss-mode . biome)
                    (ruby-mode . rubocop)
@@ -38,4 +43,3 @@
 
 (provide 'init-format)
 ;;; init-format.el ends here
-

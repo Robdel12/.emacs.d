@@ -7,8 +7,7 @@
   :mode "\\.rb\\'"
   :interpreter "ruby"
   :custom (ruby-indent-level 2)
-  :hook ((ruby-mode . lsp-deferred)
-         (ruby-mode . flymake-mode)))
+  :hook (ruby-mode . lsp-deferred))
 
 (use-package bundler :after ruby-mode)
 

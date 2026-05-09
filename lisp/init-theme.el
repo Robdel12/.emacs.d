@@ -119,7 +119,7 @@
         (when (window-system frame)
           (enable-theme 'ww/base16-theme)
           (ww/activate-operator-mono)
-          (ww/apply-base-frame-colors frame)))))))
+          (ww/apply-base-frame-colors frame))))))
 
 ;; nerd-icons are configured in init-modeline.el
 
