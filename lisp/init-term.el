@@ -13,7 +13,7 @@
   (multi-term-program "/bin/zsh")
   (term-suppress-hard-newline t)
   :config
-  ;; project-run-term is defined in init-projectile.el
+  ;; project-run-term is defined in init-project.el
   )
 
 (unless (display-mouse-p)

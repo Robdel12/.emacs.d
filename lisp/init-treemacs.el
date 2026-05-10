@@ -25,7 +25,7 @@
 (use-package treemacs-magit
   :after (treemacs magit))
 
-;; treemacs-projectile removed - using built-in project.el instead
+;; treemacs-project integration is handled by built-in project.el instead.
 
 ;; use all-the-icons instead of nerd-icons for better Emacs 30.x compatibility
 (use-package treemacs-all-the-icons

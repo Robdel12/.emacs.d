@@ -47,6 +47,7 @@ if you like.
 - `C-s`: `consult-line` (in-buffer search)
 - `s-p` / `C-c p`: Project prefix
 - `C-c p p`: Switch project and open Magit
+- `C-c p a`: Add/remember the current project
 - `C-c p m`: Open Magit for the current project
 - `C-c p s`: `consult-ripgrep` in project
 - `C-c p b`: Switch project buffer
@@ -169,7 +170,7 @@ buffer with warnings:
 - `lisp/init-lsp.el` - Language Server Protocol
 
 ### Development Tools
-- `lisp/init-projectile.el` - Project management (uses built-in project.el) and Magit project landing
+- `lisp/init-project.el` - Project management (uses built-in project.el), auto-remembering, and Magit project landing
 - `lisp/init-vcs.el` - Git (Magit)
 - `lisp/init-http.el` - REST client for API testing
 - `lisp/init-docker.el` - Docker management and container editing

@@ -47,7 +47,7 @@
 (require 'init-emojis)
 (require 'init-minibuffer)
 (require 'init-editorconfig)
-(require 'init-projectile)
+(require 'init-project)
 (require 'init-treemacs)
 (require 'init-modeline)
 (require 'init-flycheck)
